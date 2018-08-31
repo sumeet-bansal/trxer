@@ -354,56 +354,6 @@
               </xsl:for-each>
             </tbody>
           </table>
-          <Table>
-            <caption>Five most slowest tests</caption>
-            <thead>
-              <tr class="odd">
-                <th scope="col">Time</th>
-                <th scope="col" abbr="Status">Status</th>
-                <th scope="col" abbr="Test">Test</th>
-                <th scope="col" abbr="Message">Owner</th>
-                <th scope="col" abbr="Message">Duration</th>
-              </tr>
-            </thead>
-            <tbody>
-              <xsl:for-each select="/t:TestRun/t:Results/t:UnitTestResult">
-                <xsl:sort select="@duration" order="descending"/>
-                <xsl:if test="position() &gt;= 1 and position() &lt;=5">
-                  <xsl:variable name="testId" select="@testId" />
-                  <tr>
-                    <th scope="row" class="column1">
-                      <xsl:value-of select="trxreport:GetShortDateTime(@startTime)" />
-                    </th>
-                    <xsl:call-template name="tStatus">
-                      <xsl:with-param name="testId" select="@testId" />
-                    </xsl:call-template>
-                    <td class="Function slowest">
-                      <xsl:value-of select="trxreport:RemoveAssemblyName(/t:TestRun/t:TestDefinitions/t:UnitTest[@id=$testId]/t:TestMethod/@className)"/>
-                      .<xsl:value-of select="@testName"/>
-                    </td>
-                    <td>
-                      <xsl:variable name="nameSet" select="/t:TestRun/t:TestDefinitions/t:UnitTest[@id=$testId]/t:Owners/t:Owner"/>
-                      <xsl:variable name="nameCount" select="count($nameSet)"/>
-                      <xsl:for-each select="$nameSet">
-                        <xsl:value-of select="@name"/>
-                        <xsl:if test="$nameCount &gt;=position()+1 ">
-                          <br/>
-                        </xsl:if>
-                      </xsl:for-each>
-                    </td>
-                    <td class="Message slowest">
-                      <xsl:value-of select="trxreport:ToExactTimeDefinition(@duration)"/>
-                    </td>
-                  </tr>
-                </xsl:if>
-              </xsl:for-each>
-              <tr>
-                <td colspan="5">
-                  <h6>TRX Html Viewer log - Niv Navick 2015</h6>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
         </div>
       </body>
       <script>
